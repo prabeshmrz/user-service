@@ -24,13 +24,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserInfoDto getUserInfo(long id) {
-    return userMapper.toInfoDto(findById(id));
+  public UserInfoDto getUserInfo(String username) {
+    return userMapper.toInfoDto(findByUsername(username));
   }
 
-  public User findById(long id) {
+  public User findByUsername(String username) {
     return userRepository
-      .findById(id)
+      .findByUsername(username)
       .orElseThrow(() ->
         new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found!!")
       );
