@@ -9,5 +9,5 @@ import com.javaproject.microservices.userservice.dto.UserInfoDto;
 public interface UserService {
   UserInfoDto registerUser(UserDto userDto);
 
-  UserInfoDto getUserInfo(long id);
+  UserInfoDto getUserInfo(String username);
 }

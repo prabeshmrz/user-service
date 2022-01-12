@@ -71,10 +71,10 @@ public class UserController {
     );
   }
 
-  @GetMapping("{id}")
+  @GetMapping("{username}")
   public ResponseEntity<UserInfoDto> getUser(
-    @PathVariable(value = "id") long id
+    @PathVariable(value = "username") String username
   ) {
-    return ResponseEntity.ok(userService.getUserInfo(id));
+    return ResponseEntity.ok(userService.getUserInfo(username));
   }
 }
