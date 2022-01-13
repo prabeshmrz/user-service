@@ -1,6 +1,7 @@
 package com.javaproject.microservices.userservice.configuration;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import lombok.RequiredArgsConstructor;
 
 @EnableWebSecurity
@@ -30,6 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .csrf()
       .disable()
       .authorizeRequests()
+      .antMatchers(HttpMethod.GET)
+      .permitAll()
       .antMatchers("/user/**")
       .permitAll()
       .anyRequest()
@@ -48,5 +53,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
+  }
+
+  @Bean
+  public OpenAPI customOpenAPI() {
+    return new OpenAPI().info(getInfo());
+  }
+
+  private Info getInfo() {
+    return new Info()
+      .title("User Microservice")
+      .version("0.1")
+      .description("Swagger UI for APIs of User Microservice.");
   }
 }
